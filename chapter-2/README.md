@@ -246,3 +246,24 @@ kubectl describe pod
 5. kubelet은 통지를 받는다.
 6. kubelet은 도커에 이미지를 실행하라고 지시한다.
 7. 도커는 이미지를 pull하고, gsphyo91/kubia를 실행한다.
+
+## 웹 어플리케이션에 접근하기
+
+각 파드는 자체 IP 주소를 가지고 있지만, 이 주소는 클러스터 내부에 있으며 외부에서 접근이 불가능하다. 외부에서 파드에 접근을 가능하게 하려면 서비스 오브젝트를 통해 노출해야 한다.
+
+일반적인 서비스(Cluster IP)를 생성하면 이것은 클러스터 내부에서만 접근이 가능하기 때문에, LoadBalancer 유형의 특별한 서비스를 생성해야 한다.
+
+### 서비스 오브젝트 생성하기
+
+```bash
+kubectl expose rc kubia --type=LoadBalancer --name kubia-http
+```
+
+### 서비스 조회
+
+```bash
+kubectl get services
+```
+
+## 시스템의 논리적인 부분
+
